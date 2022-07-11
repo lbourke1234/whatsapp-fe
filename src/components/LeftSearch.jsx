@@ -5,7 +5,7 @@ import { AiOutlineFilter } from 'react-icons/ai'
 const LeftSearch = () => {
   return (
     <>
-      <Col md={11}>
+      <Col md={11} className="pt-3">
         <Form>
           <Form.Group className="mb-3">
             {/* <AiOutlineSearch /> */}
@@ -13,7 +13,7 @@ const LeftSearch = () => {
           </Form.Group>
         </Form>
       </Col>
-      <Col md={1}>
+      <Col md={1} className="d-flex justify-content-center align-items-center">
         <AiOutlineFilter />
       </Col>
     </>

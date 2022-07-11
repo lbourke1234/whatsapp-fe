@@ -9,15 +9,15 @@ const LeftHeading = () => {
     <Container fluid>
       <Row className="py-3">
         <Col>
-          <AiFillCheckCircle />
+          <AiFillCheckCircle className="left-heading-icons" />
         </Col>
 
         <Col className="d-flex justify-content-end">
-          <AiOutlineLeftCircle className="mr-5" />
+          <AiOutlineLeftCircle className="mr-5 left-heading-icons" />
 
-          <AiOutlinePlus className="mr-5" />
+          <AiOutlinePlus className="mr-5 left-heading-icons" />
 
-          <AiOutlineMore className="mr-4" />
+          <AiOutlineMore className="mr-4 left-heading-icons" />
         </Col>
       </Row>
     </Container>
