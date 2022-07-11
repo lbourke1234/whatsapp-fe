@@ -7,7 +7,7 @@ import { AiOutlineSearch } from 'react-icons/ai'
 const RightHeading = () => {
   return (
     <>
-      <Col md={2} className="d-flex justify-content-center align-items-center">
+      <Col md={2} className="d-flex align-items-center pl-5 top-right-heading-icons">
         <AiOutlineLeftCircle />
       </Col>
       <Col md={8}>
@@ -21,9 +21,9 @@ const RightHeading = () => {
         </Row>
       </Col>
       <Col className="d-flex justify-content-center align-items-center">
-        <AiOutlineMinus className="mr-3" />
-        <AiOutlineSearch className="mr-3" />
-        <AiOutlineEllipsis className="mr-5" />
+        <AiOutlineMinus className="mr-3 top-right-heading-icons" />
+        <AiOutlineSearch className="mr-3 top-right-heading-icons" />
+        <AiOutlineEllipsis className="mr-5 top-right-heading-icons" />
       </Col>
     </>
   )

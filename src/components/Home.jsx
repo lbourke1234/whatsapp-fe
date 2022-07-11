@@ -8,13 +8,13 @@ import RightHeading from './RightHeading'
 
 const Home = () => {
   return (
-    <Container fluid className="m-4 main-container">
+    <Container fluid className="main-container">
       <Row>
-        <Col md={5}>
-          <Row>
+        <Col md={4}>
+          <Row className="darker-gray-background">
             <LeftHeading />
           </Row>
-          <Row>
+          <Row className="mt-1">
             <LeftSearch />
           </Row>
           <Row>
@@ -22,14 +22,14 @@ const Home = () => {
           </Row>
         </Col>
 
-        <Col md={7}>
-          <Row>
+        <Col md={8}>
+          <Row className="darker-gray-background top-right py-2">
             <RightHeading />
           </Row>
-          <Row>
+          <Row className="right-chat-container">
             <RightChat />
           </Row>
-          <Row>
+          <Row className="darker-gray-background bottom-right">
             <RightChatBox />
           </Row>
         </Col>

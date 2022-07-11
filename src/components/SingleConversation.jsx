@@ -5,19 +5,19 @@ const SingleConversation = () => {
   return (
     <>
       <Col md={2} className="d-flex justify-content-center align-items-center">
-        <AiOutlineLeftCircle />
+        <AiOutlineLeftCircle className="ai-outline-left-circle" />
       </Col>
       <Col md={10}>
         <Row>
           <Col md={10}>
-            <span>Conversaiton Name Here</span>
+            <span>Conversation Name Here</span>
           </Col>
           <Col md={2}>
-            <span>Day</span>
+            <span className="day">Yesterday</span>
           </Col>
         </Row>
         <Row>
-          <span>Preview of chat goes here</span>
+          <span className="pl-3">Preview of chat goes here</span>
         </Row>
       </Col>
     </>

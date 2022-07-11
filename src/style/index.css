@@ -2,3 +2,37 @@
   height: 100vh;
   width: 100vw;
 }
+.darker-gray-background {
+  background-color: #f6f4f2;
+}
+
+.right-chat-container {
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #ece5dd;
+  height: 88vh;
+}
+.single-chat-container {
+  background-color: white;
+  border-radius: 15px;
+}
+.ai-outline-left-circle {
+  font-size: 40px;
+}
+.day {
+  font-size: 12px;
+}
+/* .top-right {
+  height: 6vh;
+}
+.bottom-right {
+  height: 6vh;
+} */
+.left-heading-icons {
+  font-size: 30px;
+}
+.top-right-heading-icons {
+  font-size: 24px;
+}
