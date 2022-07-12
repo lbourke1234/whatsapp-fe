@@ -9,7 +9,8 @@ import RightHeading from "./RightHeading";
 import { io } from "socket.io-client";
 import { Message, User } from "../components/types/index.js";
 
-const ADDRESS = "http://localhost:3001";
+const ADDRESS = process.env.REACT_APP_HOME_URL;
+
 const socket = io(ADDRESS, { transports: ["websocket"] });
 
 const Home = () => {
@@ -21,25 +22,15 @@ const Home = () => {
   const [room, setRoom] = useState("blue");
 
   useEffect(() => {
-    // this code will be executed just once!
-    // we need to set up our event listeners just once!
-    // ...so we're going to put them here :)
     socket.on("connect", () => {
-      // the server emits an event of type 'connect' every time a client
-      // successfully established a connection
       console.log("Connection established!");
     });
 
-    // let's now listen for another type of event, 'loggedin'
-    // this should happen once AFTER sending our username
     socket.on("loggedin", (onlineUsers) => {
       console.log("logged in successfully!");
       setLoggedIn(true);
       setOnlineUsers(onlineUsers);
-      // fetchOnlineUsers()
 
-      // I moved this newConnection event listener in the loggedin one,
-      // since I don't want this "trap" to be set from the first moment
       socket.on("newConnection", (onlineUsers) => {
         console.log("a new client just connected!");
         // console.log('a new challenger appears!')
@@ -52,14 +43,8 @@ const Home = () => {
           ...evaluatedChatHistory,
           bouncedMessage,
         ]);
-        // looks like the one receiving this 'message' event is appending
-        // the last message to an empty chatHistory...?
-        // we can fix this using the second overload of the setState function,
-        // passing a callback carrying the up-to-date value and returning
-        // the new chatHistory
       });
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

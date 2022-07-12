@@ -11,8 +11,6 @@ let SignUpPage = () => {
 
   const registerUrl = process.env.REACT_APP_REGISTER_URL;
 
-  console.log("RegisterURL;", registerUrl);
-
   const bodyData = {
     email: emailInput,
     password: passwordInput,
