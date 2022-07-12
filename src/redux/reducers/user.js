@@ -1,12 +1,24 @@
 const initialState = {
-  name: ''
-}
+  userInfo: {
+    _id: "",
+    name: "",
+    email: "",
+    avatar: "",
+  },
+  chats: {
+    active: "",
+    list: {
+      messages: [],
+    },
+  },
+  // socket: SocketClient
+};
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default userReducer
+export default userReducer;
