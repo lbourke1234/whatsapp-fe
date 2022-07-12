@@ -47,7 +47,7 @@ const Home = () => {
         setOnlineUsers(onlineUsers);
       });
 
-      socket.on("message", (bouncedMessage) => {
+      socket.emit("message", (bouncedMessage) => {
         setChatHistory((evaluatedChatHistory) => [
           ...evaluatedChatHistory,
           bouncedMessage,
