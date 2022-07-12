@@ -1,36 +1,31 @@
 import SingleChat from './SingleChat'
+import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
 const RightChat = () => {
-  const token = window.localStorage.getItem('token')
+  // const userInfo = useSelector((state) => state)
+  // const allChats = useSelector((state) => state.user.history.history)
 
-  useEffect(() => {
-    fetchMessages()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // useEffect(() => {
+  //   console.log(allChats)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
-  const fetchMessages = async () => {
-    const response = await fetch('http://localhost:5001/messages', {
-      headers: {
-        Authentication: `Bearer ${token}`
-      }
-    })
-    const body = await response.json()
-    console.log(body)
-  }
+  // useEffect(() => {
+  //   console.log(allChats)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [allChats])
 
   return (
     <>
+      {/* {allChats.map((chat) => (
+        <SingleChat chat={chat} /> */}
       <SingleChat />
       <SingleChat />
       <SingleChat />
       <SingleChat />
       <SingleChat />
-      <SingleChat />
-      <SingleChat />
-      <SingleChat />
-      <SingleChat />
-      <SingleChat />
+      {/* ))} */}
     </>
   )
 }
