@@ -1,11 +1,6 @@
-.main-container {
-  height: 100vh;
-  width: 100vw;
-}
 .darker-gray-background {
   background-color: #f6f4f2;
 }
-
 .right-chat-container {
   padding-left: 40px;
   padding-right: 40px;
@@ -24,15 +19,42 @@
 .day {
   font-size: 12px;
 }
-/* .top-right {
-  height: 6vh;
-}
-.bottom-right {
-  height: 6vh;
-} */
 .left-heading-icons {
   font-size: 30px;
 }
 .top-right-heading-icons {
   font-size: 24px;
+}
+.conversation-name {
+  font-weight: 600;
+  font-size: 18px;
+}
+.chat-preview {
+  font-weight: 100;
+}
+.profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 24px;
+}
+.heading-profile-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.left-heading-height {
+  height: 9vh;
+}
+.right-heading-height {
+  height: 9vh;
+}
+.chat-box-height {
+  height: 9vh;
+}
+.right-chat-height {
+  height: 82vh;
+}
+.left-chats-height {
+  height: 91vh;
 }
