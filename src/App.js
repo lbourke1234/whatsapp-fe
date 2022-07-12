@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import LoginPage from "./components/LoginPage";
 import SignUpPage from "./components/SignupPage";
-import DashboardPage from "./components/DashboardPage";
+/* import DashboardPage from "./components/DashboardPage"; */
 
 const App = () => (
   <BrowserRouter>
@@ -12,7 +12,7 @@ const App = () => (
       <Route path="/" element={<Home />} />
       <Route path="/Login" element={<LoginPage />} />
       <Route path="/signup" element={<SignUpPage />} />;
-      <Route path="/dashboard" element={<DashboardPage />} />
+      {/*       <Route path="/dashboard" element={<DashboardPage />} /> */}
     </Routes>
   </BrowserRouter>
 );

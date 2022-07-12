@@ -31,7 +31,7 @@ const LoginPage = () => {
       let accessToken = data.accessToken;
       console.log("ACCESSTOKEN:", accessToken);
       localStorage.setItem("token", JSON.stringify(accessToken));
-      navigate("/dashboard");
+      navigate("/");
     } else {
       console.log("Something went wrong in the login process.");
     }
