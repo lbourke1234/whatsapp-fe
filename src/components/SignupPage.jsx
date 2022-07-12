@@ -16,7 +16,6 @@ let SignUpPage = () => {
     password: passwordInput,
     name: nameInput,
   };
-  console.log(bodyData);
 
   const fetchData = async () => {
     let response = await fetch(registerUrl, {
