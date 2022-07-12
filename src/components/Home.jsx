@@ -52,25 +52,26 @@ const Home = () => {
     <Container fluid className="main-container">
       <Row>
         <Col md={4}>
-          <Row className="darker-gray-background">
+          <Row className="darker-gray-background left-heading-height">
             <LeftHeading />
           </Row>
           <Row className="mt-1">
             <LeftSearch />
           </Row>
-          <Row>
+          <hr className="mt-n1" />
+          <Row className="left-chats-height">
             <LeftConversations />
           </Row>
         </Col>
 
         <Col md={8}>
-          <Row className="darker-gray-background top-right py-2">
+          <Row className="darker-gray-background top-right py-2 right-heading-height">
             <RightHeading />
           </Row>
-          <Row className="right-chat-container">
+          <Row className="right-chat-container right-chat-height">
             <RightChat />
           </Row>
-          <Row className="darker-gray-background bottom-right">
+          <Row className="darker-gray-background bottom-right chat-box-height">
             <RightChatBox />
           </Row>
         </Col>
