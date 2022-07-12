@@ -18,6 +18,7 @@ const initialState = {
     list: {
       chat: [],
     },
+    chatId: "",
   },
 };
 
@@ -47,7 +48,7 @@ const userReducer = (state = initialState, action) => {
     case NEW_MESSAGE:
       return {
         ...state,
-        setHistory: payload,
+        newMessage: payload,
       };
 
     default:

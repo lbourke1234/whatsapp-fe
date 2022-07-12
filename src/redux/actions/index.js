@@ -29,19 +29,19 @@ export const setActiveChat = (chatId) => {
 export const setHistory = (history, chatId) => {
   return {
     type: SET_HISTORY,
-    payload: (history = {
+    payload: {
       chatId,
       history,
-    }),
+    },
   };
 };
 
 export const newMessage = (message, chatId) => {
   return {
     type: NEW_MESSAGE,
-    payload: (message = {
+    payload: {
       chatId,
       message,
-    }),
+    },
   };
 };
