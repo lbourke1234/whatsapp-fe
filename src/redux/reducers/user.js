@@ -3,58 +3,58 @@ import {
   SET_ACTIVE_CHAT,
   SET_CHATS,
   SET_HISTORY,
-  SET_USER_INFO
-} from '../actions'
+  SET_USER_INFO,
+} from "../actions";
 
 const initialState = {
   userInfo: {
-    _id: '',
-    name: '',
-    email: '',
-    avatar: ''
+    _id: "",
+    name: "",
+    email: "",
+    avatar: "",
   },
   chats: {
-    active: '',
+    active: "",
     list: {
-      chat: []
+      chat: [],
     },
-    chatId: ''
+    chatId: "",
   },
-  history: []
-}
+  history: [],
+};
 
 const userReducer = (state = initialState, action) => {
-  const { type, payload } = action
+  const { type, payload } = action;
   switch (action.type) {
     case SET_USER_INFO:
       return {
         ...state,
-        userInfo: payload
-      }
+        userInfo: payload,
+      };
     case SET_CHATS:
       return {
         ...state,
-        chats: payload
-      }
+        chats: payload,
+      };
     case SET_ACTIVE_CHAT:
       return {
         ...state,
-        chatId: payload
-      }
+        chatId: payload,
+      };
     case SET_HISTORY:
       return {
         ...state,
-        history: payload
-      }
+        history: payload,
+      };
     case NEW_MESSAGE:
       return {
         ...state,
-        newMessage: payload
-      }
+        newMessage: payload,
+      };
 
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default userReducer
+export default userReducer;
