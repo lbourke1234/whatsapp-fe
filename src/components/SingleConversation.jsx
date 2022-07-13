@@ -3,7 +3,6 @@ import { Col, Row } from 'react-bootstrap'
 const SingleConversation = ({ chat }) => {
   return (
     <>
-      {console.log('CHAT SINGLE CONVO', chat)}
       <Col md={2} className="d-flex justify-content-center align-items-center">
         <img className="profile-image" src={chat.content.media} alt="kitten"></img>
       </Col>

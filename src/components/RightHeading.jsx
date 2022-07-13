@@ -2,16 +2,14 @@ import { Row, Col } from 'react-bootstrap'
 import { AiOutlineMinus } from 'react-icons/ai'
 import { AiOutlineEllipsis } from 'react-icons/ai'
 import { AiOutlineSearch } from 'react-icons/ai'
+import { useSelector } from 'react-redux'
 
 const RightHeading = () => {
+  const userInfo = useSelector((state) => state.user.userInfo)
   return (
     <>
       <Col md={2} className="d-flex align-items-center pl-5 top-right-heading-icons">
-        <img
-          className="heading-profile-image"
-          src="http://placekitten.com/200/300"
-          alt="kitten"
-        ></img>
+        <img className="heading-profile-image" src={userInfo.avatar} alt="kitten"></img>
       </Col>
       <Col md={8}>
         <Row>
