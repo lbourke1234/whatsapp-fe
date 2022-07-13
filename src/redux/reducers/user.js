@@ -14,7 +14,7 @@ const initialState = {
     avatar: ''
   },
   chats: {
-    active: '',
+    active: 'online',
     list: {
       chat: []
     },
@@ -34,7 +34,13 @@ const userReducer = (state = initialState, action) => {
     case SET_CHATS:
       return {
         ...state,
-        chats: payload
+        chats: {
+          active: '',
+          list: {
+            chat: payload
+          },
+          chatId: ''
+        }
       }
     case SET_ACTIVE_CHAT:
       return {
