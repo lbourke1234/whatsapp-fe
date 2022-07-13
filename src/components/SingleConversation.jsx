@@ -1,8 +1,12 @@
 import { Col, Row } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
+import { setChatIdAction } from '../redux/actions'
 
 const SingleConversation = ({ chat }) => {
+  const dispatch = useDispatch()
+
   return (
-    <>
+    <div onClick={() => dispatch(setChatIdAction(chat.room))}>
       <Col md={2} className="d-flex justify-content-center align-items-center">
         <img className="profile-image" src={chat.content.media} alt="kitten"></img>
       </Col>
@@ -20,7 +24,7 @@ const SingleConversation = ({ chat }) => {
         </Row>
         <hr></hr>
       </Col>
-    </>
+    </div>
   )
 }
 export default SingleConversation
