@@ -2,6 +2,7 @@ import {
   NEW_MESSAGE,
   SET_ACTIVE_CHAT,
   SET_CHATS,
+  SET_CHAT_ID,
   SET_HISTORY,
   SET_USER_INFO
 } from '../actions'
@@ -38,11 +39,10 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         chats: {
-          active: '',
+          ...state.chats,
           list: {
             chat: payload
-          },
-          chatId: ''
+          }
         }
       }
     case SET_ACTIVE_CHAT:
@@ -59,6 +59,14 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         newMessage: payload
+      }
+    case SET_CHAT_ID:
+      return {
+        ...state,
+        chats: {
+          ...state.chats,
+          chatId: payload
+        }
       }
 
     default:
