@@ -11,11 +11,13 @@ import { Message, User } from "../components/types/index.js";
 import { useSelector, useDispatch } from "react-redux";
 import { setChats, setHistory, setUserInfo } from "../redux/actions";
 
-const ADDRESS = process.env.REACT_APP_HOME_URL;
-
+const ADDRESS = process.env.REACT_APP_Socket_IO_URL;
 const socket = io(ADDRESS, { transports: ["websocket"] });
 
 const Home = () => {
+  const userId = useSelector((state) => state.user.userInfo._id);
+  const [room, setRoom] = useState("");
+
   // THESE ARE USED FOR SOCKET.IO. WE MIGHT REMOVE THEM LATER:
   const [loggedIn, setLoggedIn] = useState(false);
   const [onlineUsers, setOnlineUsers] = useState([]);
@@ -93,6 +95,8 @@ const Home = () => {
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connection established!");
+      console.log("Socket ID", ` ${socket.id}!`);
+      setRoom(`${socket.id}!`);
     });
 
     socket.on("loggedin", (onlineUsers) => {
@@ -102,6 +106,7 @@ const Home = () => {
 
       socket.on("newConnection", (onlineUsers) => {
         console.log("a new client just connected!");
+        console.log("Online Users:", onlineUsers);
         setOnlineUsers(onlineUsers);
       });
 
@@ -115,7 +120,16 @@ const Home = () => {
     getUserMessageHistory();
     getUserIdInformation();
     getChatInformationForUser();
+    handleUsernameSubmit();
   }, []);
+
+  // SENDING OUR SOCKET IO USERNAME TO THE SOCKET IO BACKEND LISTENER!
+  const handleUsernameSubmit = () => {
+    socket.emit("setUsername", {
+      username: userId,
+      room,
+    });
+  };
 
   return (
     <Container fluid className="main-container">
