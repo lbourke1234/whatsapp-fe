@@ -16,7 +16,10 @@ const initialState = {
   chats: {
     active: 'online',
     list: {
-      chat: []
+      chat: {
+        chats: [],
+        users: []
+      }
     },
     chatId: ''
   },
