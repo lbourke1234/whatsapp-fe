@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 const RightChat = () => {
   // const userInfo = useSelector((state) => state)
-  // const allChats = useSelector((state) => state.user.history.history)
+  const allChats = useSelector((state) => state.user.history.history)
 
   // useEffect(() => {
   //   console.log(allChats)
@@ -18,14 +18,11 @@ const RightChat = () => {
 
   return (
     <>
-      {/* {allChats.map((chat) => (
-        <SingleChat chat={chat} /> */}
-      <SingleChat />
-      <SingleChat />
-      <SingleChat />
-      <SingleChat />
-      <SingleChat />
-      {/* ))} */}
+      {allChats ? (
+        allChats.map((chat) => <SingleChat key={chat._id} chat={chat} />)
+      ) : (
+        <div></div>
+      )}
     </>
   )
 }
