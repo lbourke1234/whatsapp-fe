@@ -9,7 +9,7 @@ import RightHeading from "./RightHeading";
 import { io } from "socket.io-client";
 import { Message, User } from "../components/types/index.js";
 import { useSelector, useDispatch } from "react-redux";
-import { setHistory, setUserInfo } from "../redux/actions";
+import { setChats, setHistory, setUserInfo } from "../redux/actions";
 
 const ADDRESS = process.env.REACT_APP_HOME_URL;
 
@@ -66,6 +66,29 @@ const Home = () => {
     }
   };
 
+  //GETTING SPECIFIC CHAT INFORMATION FOR A USER AND DISPATCHING IT TO THE REDUX STORE
+  let getChatInformationForUser = async () => {
+    const response = await fetch(
+      process.env.REACT_APP_HOME_GET_CHAT_INFORMATION,
+      {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${accessToken2}`,
+        },
+      }
+    );
+    if (response.ok) {
+      const data = await response.json();
+      console.log("CHAT DATA: ", data);
+      dispatch(setChats(data));
+    } else {
+      console.log(
+        "Something went wrong with setting the CHAT information for the user."
+      );
+    }
+  };
+
   // SOCKET IS CONNECTED IN THE COMPONENTDIDMOUNT AND THE REDUX FUNCTIONS ARE CALLED:
   useEffect(() => {
     socket.on("connect", () => {
@@ -91,6 +114,7 @@ const Home = () => {
     });
     getUserMessageHistory();
     getUserIdInformation();
+    getChatInformationForUser();
   }, []);
 
   return (
