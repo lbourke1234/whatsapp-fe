@@ -11,7 +11,7 @@ import { Message, User } from "../components/types/index.js";
 import { useSelector, useDispatch } from "react-redux";
 import { setChats, setHistory, setUserInfo } from "../redux/actions";
 
-const ADDRESS = process.env.REACT_APP_HOME_URL;
+const ADDRESS = process.env.REACT_APP_Socket_IO_URL;
 
 const socket = io(ADDRESS, { transports: ["websocket"] });
 
