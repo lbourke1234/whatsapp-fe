@@ -14,7 +14,8 @@ import {
   setHistory,
   setUserInfo,
   setChatIdAction,
-  setSocketIdAction
+  setSocketIdAction,
+  setFullInforForUserAction
 } from '../redux/actions'
 
 const ADDRESS = process.env.REACT_APP_Socket_IO_URL
@@ -23,6 +24,7 @@ const socket = io(ADDRESS, { transports: ['websocket'] })
 const Home = () => {
   const userId = useSelector((state) => state.user.userInfo._id)
   const [room, setRoom] = useState('')
+  const [data_Id, setData_Id] = useState('')
 
   // THESE ARE USED FOR SOCKET.IO. WE MIGHT REMOVE THEM LATER:
   const [loggedIn, setLoggedIn] = useState(false)
@@ -31,6 +33,10 @@ const Home = () => {
   //********************************************************
 
   const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(setUserInfo(data_Id))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data_Id])
 
   //GETTING TOKEN FROM LOCAL STORAGE ******
   const accessToken = localStorage.getItem('token')
@@ -47,7 +53,6 @@ const Home = () => {
     })
     if (response.ok) {
       const data = await response.json()
-      console.log('DATA: ', data)
       dispatch(setHistory(data))
     } else {
       console.log('Something went wrong in the login process.')
@@ -64,8 +69,10 @@ const Home = () => {
     })
     if (response.ok) {
       const data = await response.json()
-      console.log('USER DATA: ', data)
-      dispatch(setUserInfo(data))
+
+      handleUsernameSubmit(data._id)
+      setData_Id(data._id)
+      dispatch(setFullInforForUserAction(data))
     } else {
       console.log('Something went wrong with setting the User information.')
     }
@@ -82,7 +89,6 @@ const Home = () => {
     })
     if (response.ok) {
       const data = await response.json()
-      console.log('CHAT DATA: ', data)
       dispatch(setChats(data))
     } else {
       console.log('Something went wrong with setting the CHAT information for the user.')
@@ -112,14 +118,14 @@ const Home = () => {
     getUserMessageHistory()
     getUserIdInformation()
     getChatInformationForUser()
-    handleUsernameSubmit()
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // SENDING OUR SOCKET IO USERNAME TO THE SOCKET IO BACKEND LISTENER!
-  const handleUsernameSubmit = () => {
+  const handleUsernameSubmit = (username) => {
     socket.emit('setUsername', {
-      username: userId,
+      username,
       room
     })
   }

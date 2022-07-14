@@ -3,6 +3,7 @@ import {
   SET_ACTIVE_CHAT,
   SET_CHATS,
   SET_CHAT_ID,
+  SET_FULL_INFO_FOR_USER,
   SET_HISTORY,
   SET_SOCKET_ID,
   SET_USER_INFO
@@ -35,7 +36,10 @@ const userReducer = (state = initialState, action) => {
     case SET_USER_INFO:
       return {
         ...state,
-        userInfo: payload
+        userInfo: {
+          ...state.userInfo,
+          _id: payload
+        }
       }
     case SET_CHATS:
       return {
@@ -78,7 +82,16 @@ const userReducer = (state = initialState, action) => {
           userSocket: payload
         }
       }
-
+    case SET_FULL_INFO_FOR_USER:
+      return {
+        ...state,
+        userInfo: {
+          ...state.userInfo,
+          name: payload.name,
+          email: payload.email,
+          avatar: payload.avatar
+        }
+      }
     default:
       return state
   }
