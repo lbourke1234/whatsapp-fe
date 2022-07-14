@@ -5,6 +5,7 @@ export const SET_ACTIVE_CHAT = 'SET_ACTIVE_CHAT'
 export const SET_HISTORY = 'SET_HISTORY'
 export const NEW_MESSAGE = 'NEW_MESSAGE'
 export const SET_CHAT_ID = 'SET_CHAT_ID'
+export const SET_SOCKET_ID = 'SET_SOCKET_ID'
 
 export const setUserInfo = (user) => {
   return {
@@ -50,4 +51,9 @@ export const newMessage = (message, chatId) => {
 export const setChatIdAction = (chatId) => ({
   type: SET_CHAT_ID,
   payload: chatId
+})
+
+export const setSocketIdAction = (socket) => ({
+  type: SET_SOCKET_ID,
+  payload: socket
 })

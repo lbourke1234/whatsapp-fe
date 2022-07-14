@@ -1,48 +1,48 @@
-import React, { useState } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react'
+import { Form, Button, Container, Row, Col } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 
 let SignUpPage = () => {
-  const [passwordInput, setPasswordInput] = useState("");
-  const [emailInput, setEmailInput] = useState("");
-  const [nameInput, setNameInput] = useState("");
-  const [checkBoxClicked, setCheckboxClicked] = useState(false);
-  let navigate = useNavigate();
+  const [passwordInput, setPasswordInput] = useState('')
+  const [emailInput, setEmailInput] = useState('')
+  const [nameInput, setNameInput] = useState('')
+  const [checkBoxClicked, setCheckboxClicked] = useState(false)
+  let navigate = useNavigate()
 
-  const registerUrl = process.env.REACT_APP_REGISTER_URL;
+  const registerUrl = process.env.REACT_APP_REGISTER_URL
 
   const bodyData = {
     email: emailInput,
     password: passwordInput,
-    name: nameInput,
-  };
+    name: nameInput
+  }
 
   const fetchData = async () => {
     let response = await fetch(registerUrl, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-type": "application/json",
+        'Content-type': 'application/json'
       },
-      body: JSON.stringify(bodyData),
-    });
+      body: JSON.stringify(bodyData)
+    })
     if (response.ok) {
-      let data = await response.json();
-      console.log(data);
-      navigate("/login");
+      let data = await response.json()
+      console.log(data)
+      navigate('/login')
     } else {
-      console.log("Something went wrong during registration.");
+      console.log('Something went wrong during registration.')
     }
-  };
+  }
 
   const onSubmitFunction = (event) => {
-    event.preventDefault();
-    fetchData();
-  };
+    event.preventDefault()
+    fetchData()
+  }
 
   let checkBoxFunction = (event) => {
-    console.log("CheckBox clicked", event.target.value);
-    setCheckboxClicked(!checkBoxClicked);
-  };
+    console.log('CheckBox clicked', event.target.value)
+    setCheckboxClicked(!checkBoxClicked)
+  }
 
   return (
     <Container>
@@ -56,7 +56,7 @@ let SignUpPage = () => {
                 type="text"
                 placeholder="Name"
                 onChange={(event) => {
-                  setNameInput(event.target.value);
+                  setNameInput(event.target.value)
                 }}
               />
             </Form.Group>
@@ -66,7 +66,7 @@ let SignUpPage = () => {
                 type="email"
                 placeholder="Enter email"
                 onChange={(event) => {
-                  setEmailInput(event.target.value);
+                  setEmailInput(event.target.value)
                 }}
               />
               <Form.Text className="text-muted">
@@ -79,7 +79,7 @@ let SignUpPage = () => {
                 type="password"
                 placeholder="Password"
                 onChange={(event) => {
-                  setPasswordInput(event.target.value);
+                  setPasswordInput(event.target.value)
                 }}
               />
             </Form.Group>
@@ -103,7 +103,7 @@ let SignUpPage = () => {
         </Col>
       </Row>
     </Container>
-  );
-};
+  )
+}
 
-export default SignUpPage;
+export default SignUpPage
