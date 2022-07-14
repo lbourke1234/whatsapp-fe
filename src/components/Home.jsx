@@ -1,110 +1,119 @@
-import { useEffect, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
-import RightChatBox from "./RightChatBox";
-import LeftConversations from "./LeftConversations";
-import LeftHeading from "./LeftHeading";
-import LeftSearch from "./LeftSearch";
-import RightChat from "./RightChat";
-import RightHeading from "./RightHeading";
-import { io } from "socket.io-client";
-import { Message, User } from "../components/types/index.js";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
+import RightChatBox from './RightChatBox'
+import LeftConversations from './LeftConversations'
+import LeftHeading from './LeftHeading'
+import LeftSearch from './LeftSearch'
+import RightChat from './RightChat'
+import RightHeading from './RightHeading'
+import { io } from 'socket.io-client'
+import { Message, User } from '../components/types/index.js'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   setChats,
   setHistory,
   setUserInfo,
   setChatIdAction,
   setSocketIdAction,
-  setFullInforForUserAction,
-} from "../redux/actions";
+  setFullInforForUserAction
+} from '../redux/actions'
 
-const ADDRESS = process.env.REACT_APP_Socket_IO_URL;
-const socket = io(ADDRESS, { transports: ["websocket"] });
+const ADDRESS = process.env.REACT_APP_Socket_IO_URL
+const socket = io(ADDRESS, { transports: ['websocket'] })
 
 const Home = () => {
-  const userId = useSelector((state) => state.user.userInfo._id);
-  const [room, setRoom] = useState("");
-  const [data_Id, setData_Id] = useState("");
+  const [localMessages, setLocalMessages] = useState([])
+  const userId = useSelector((state) => state.user.userInfo._id)
+  const [room, setRoom] = useState('')
+  const [data_Id, setData_Id] = useState('')
+  const userHistory = useSelector((state) => state.user.history.history)
 
   // THESE ARE USED FOR SOCKET.IO. WE MIGHT REMOVE THEM LATER:
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [onlineUsers, setOnlineUsers] = useState([]);
-  const [chatHistory, setChatHistory] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [onlineUsers, setOnlineUsers] = useState([])
+  const [chatHistory, setChatHistory] = useState([])
   //********************************************************
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(setUserInfo(data_Id));
+    dispatch(setUserInfo(data_Id))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data_Id]);
+  }, [data_Id])
 
   //GETTING TOKEN FROM LOCAL STORAGE ******
-  const accessToken = localStorage.getItem("token");
-  const accessToken2 = accessToken.substring(1, accessToken.length - 1);
+  const accessToken = localStorage.getItem('token')
+  const accessToken2 = accessToken.substring(1, accessToken.length - 1)
 
   //GETTING SPECIFIC USER MESSAGE HISTORY AND DISPATCHING IT TO THE REDUX STORE
   let getUserMessageHistory = async () => {
     const response = await fetch(process.env.REACT_APP_HOME_GET_USER_MESSAGES, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-type": "application/json",
-        Authorization: `Bearer ${accessToken2}`,
-      },
-    });
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${accessToken2}`
+      }
+    })
     if (response.ok) {
-      const data = await response.json();
-      dispatch(setHistory(data));
+      const data = await response.json()
+      dispatch(setHistory(data))
     } else {
-      console.log("Something went wrong in the login process.");
+      console.log('Something went wrong in the login process.')
     }
-  };
+  }
   //GETTING SPECIFIC USER ID INFORMATION AND DISPATCHING IT TO THE REDUX STORE
   let getUserIdInformation = async () => {
-    const response = await fetch(
-      process.env.REACT_APP_HOME_GET_USER_INFORMATION,
-      {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${accessToken2}`,
-        },
+    const response = await fetch(process.env.REACT_APP_HOME_GET_USER_INFORMATION, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${accessToken2}`
       }
-    );
+    })
     if (response.ok) {
-      const data = await response.json();
+      const data = await response.json()
 
-      handleUsernameSubmit(data._id);
-      setData_Id(data._id);
-      dispatch(setFullInforForUserAction(data));
+      handleUsernameSubmit(data._id)
+      setData_Id(data._id)
+      dispatch(setFullInforForUserAction(data))
     } else {
-      console.log("Something went wrong with setting the User information.");
+      console.log('Something went wrong with setting the User information.')
     }
-  };
+  }
 
   //GETTING SPECIFIC CHAT INFORMATION FOR A USER AND DISPATCHING IT TO THE REDUX STORE
   let getChatInformationForUser = async () => {
-    const response = await fetch(
-      process.env.REACT_APP_HOME_GET_CHAT_INFORMATION,
-      {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          Authorization: `Bearer ${accessToken2}`,
-        },
+    const response = await fetch(process.env.REACT_APP_HOME_GET_CHAT_INFORMATION, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${accessToken2}`
       }
-    );
+    })
     if (response.ok) {
-      const data = await response.json();
-      dispatch(setChats(data));
+      const data = await response.json()
+      dispatch(setChats(data))
     } else {
-      console.log(
-        "Something went wrong with setting the CHAT information for the user."
-      );
+      console.log('Something went wrong with setting the CHAT information for the user.')
     }
-  };
+  }
 
-  const userHistory = useSelector((state) => state.user.history.history);
-  console.log("UserHistory1", userHistory);
+  useEffect(() => {
+    if (userHistory.length > 0) {
+      const filterHistory = userHistory.filter(
+        (history) => history.room !== userHistory.room
+      )
+      setLocalMessages(filterHistory)
+
+      socket.emit('joinRooms', { history: filterHistory })
+
+      // console.log('FilterHistory:', filterHistory)
+
+      // const mapppingHistory = filterHistory.map((history) => socket.join(history.room))
+      // console.log('MappingHistory: ', mapppingHistory)
+      // console.log(userHistory)
+      // console.log('UserHistory1', userHistory)
+    }
+  }, [userHistory])
 
   /* const mappingThroughUserHistory = () => {
     return userHistory.map((history) => socket.join(history.room));
@@ -114,51 +123,47 @@ const Home = () => {
 
   // SOCKET IS CONNECTED IN THE COMPONENTDIDMOUNT AND THE REDUX FUNCTIONS ARE CALLED:
   useEffect(() => {
-    socket.on("connect", () => {
-      console.log("Connection established!");
-      console.log("Socket ID", ` ${socket.id}!`);
-      setRoom(`${socket.id}!`);
-      dispatch(setSocketIdAction(socket.id));
+    socket.on('connect', () => {
+      console.log('Connection established!')
+      console.log('Socket ID', ` ${socket.id}!`)
+      setRoom(`${socket.id}!`)
+      dispatch(setSocketIdAction(socket.id))
 
-      console.log("USERHISTORY! RASMSUSUAHSHDAS", userHistory);
+      console.log('USERHISTORY! RASMSUSUAHSHDAS', userHistory)
+    })
 
-      const filterHistory = userHistory.filter(
-        (history) => history.room !== history.room
-      );
+    socket.on('loggedin', (onlineUsers) => {
+      console.log('logged in successfully!')
+      setLoggedIn(true)
+      setOnlineUsers(onlineUsers)
 
-      console.log("FilterHistory:", filterHistory);
+      socket.on('newConnection', (onlineUsers) => {
+        console.log('a new client just connected!')
+        console.log('Online Users:', onlineUsers)
+        setOnlineUsers(onlineUsers)
+      })
+    })
+    getUserMessageHistory()
+    getUserIdInformation()
+    getChatInformationForUser()
 
-      const mapppingHistory = filterHistory.map((history) =>
-        socket.join(history.room)
-      );
-      console.log("MappingHistory: ", mapppingHistory);
-    });
-
-    socket.on("loggedin", (onlineUsers) => {
-      console.log("logged in successfully!");
-      setLoggedIn(true);
-      setOnlineUsers(onlineUsers);
-
-      socket.on("newConnection", (onlineUsers) => {
-        console.log("a new client just connected!");
-        console.log("Online Users:", onlineUsers);
-        setOnlineUsers(onlineUsers);
-      });
-    });
-    getUserMessageHistory();
-    getUserIdInformation();
-    getChatInformationForUser();
+    socket.on('receivedMessage', (sender, room, content) => {
+      console.log('CONTENT', content)
+      console.log('sender', sender)
+      console.log('room', room)
+      localMessages.push(content)
+    })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   // SENDING OUR SOCKET IO USERNAME TO THE SOCKET IO BACKEND LISTENER!
   const handleUsernameSubmit = (username) => {
-    socket.emit("setUsername", {
+    socket.emit('setUsername', {
       username,
-      room,
-    });
-  };
+      room
+    })
+  }
 
   /*   socket.emit("message", (bouncedMessage) => { */
   /* setChatHistory((evaluatedChatHistory) => [
@@ -197,7 +202,7 @@ const Home = () => {
         </Col>
       </Row>
     </Container>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
