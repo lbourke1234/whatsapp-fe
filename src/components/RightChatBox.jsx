@@ -15,6 +15,9 @@ const RightChatBox = () => {
   const accessToken2 = accessToken.substring(1, accessToken.length - 1);
   const dispatch = useDispatch();
   const room = useSelector((state) => state.user.chats.chatId);
+
+  const specificRoom = useSelector((state) => state.user.chats.list.chat.chats);
+
   const allMessages = useSelector((state) => state.user.chats.list.chat.chats);
   const roomMessages = allMessages.filter((message) => message.room === room);
   const userInfo = useSelector((state) => state.user.userInfo);
@@ -28,7 +31,9 @@ const RightChatBox = () => {
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
-    socket.emit("message", userInfo._id, fullMessage.content, room);
+    const particularRoom = specificRoom[0]._id;
+
+    socket.emit("message", userInfo._id, fullMessage.content, particularRoom);
 
     roomMessages.push(userInfo._id, fullMessage.content, room);
 
@@ -36,7 +41,7 @@ const RightChatBox = () => {
   };
 
   useEffect(() => {
-    refetchRoomMessages();
+    /*     refetchRoomMessages(); */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomMessages]);
 

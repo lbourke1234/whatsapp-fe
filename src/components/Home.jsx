@@ -141,8 +141,6 @@ const Home = () => {
       console.log("Socket ID", ` ${socket.id}!`);
       setRoom(`${socket.id}!`);
       dispatch(setSocketIdAction(socket.id));
-
-      console.log("USERHISTORY! RASMSUSUAHSHDAS", userHistory);
     });
 
     socket.on("loggedin", (onlineUsers) => {

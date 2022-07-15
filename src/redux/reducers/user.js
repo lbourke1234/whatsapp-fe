@@ -30,6 +30,11 @@ const initialState = {
   history: {
     history: [],
   },
+  room: {
+    _id: "",
+    messages: [],
+    members: [],
+  },
 };
 
 const userReducer = (state = initialState, action) => {
