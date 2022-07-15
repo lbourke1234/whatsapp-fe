@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, ResponsiveEmbed } from "react-bootstrap";
 import RightChatBox from "./RightChatBox";
 import LeftConversations from "./LeftConversations";
 import LeftHeading from "./LeftHeading";
@@ -16,6 +16,7 @@ import {
   setChatIdAction,
   setSocketIdAction,
   setFullInforForUserAction,
+  setAllRoomsAction,
 } from "../redux/actions";
 
 const ADDRESS = process.env.REACT_APP_Socket_IO_URL;
@@ -106,6 +107,20 @@ const Home = () => {
     }
   };
 
+  const fetchAllRoomMessages = async () => {
+    const response = await fetch(process.env.REACT_APP_FETCH_ROOM_DATA, {
+      headers: {
+        Authorization: `Bearer ${accessToken2}`,
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      console.log("ALL ROOMS DATA: ", data);
+      console.log("DATAA . ROOM:", data[0].room);
+      dispatch(setAllRoomsAction(data));
+    }
+  };
+
   /* useEffect(() => {
     if (isFilled) {
       const filterHistory = userHistory.filter(
@@ -157,6 +172,7 @@ const Home = () => {
     getUserMessageHistory();
     getUserIdInformation();
     getChatInformationForUser();
+    fetchAllRoomMessages();
 
     socket.on("receivedMessage", ({ sender, room, content }) => {
       console.log("CONTENT", content);
