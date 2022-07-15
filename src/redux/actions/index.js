@@ -7,6 +7,7 @@ export const NEW_MESSAGE = 'NEW_MESSAGE'
 export const SET_CHAT_ID = 'SET_CHAT_ID'
 export const SET_SOCKET_ID = 'SET_SOCKET_ID'
 export const SET_FULL_INFO_FOR_USER = 'SET_FULL_INFO_FOR_USER'
+export const SET_CURRENT_ROOM = 'SET_CURRENT_ROOM'
 
 export const setUserInfo = (user) => {
   return {
@@ -61,4 +62,8 @@ export const setSocketIdAction = (socket) => ({
 export const setFullInforForUserAction = (data) => ({
   type: SET_FULL_INFO_FOR_USER,
   payload: data
+})
+export const setCurrentRoomAction = (room) => ({
+  type: SET_CURRENT_ROOM,
+  payload: room
 })
