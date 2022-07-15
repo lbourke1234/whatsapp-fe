@@ -7,6 +7,7 @@ const LeftConversations = () => {
   const allChats = useSelector((state) => state.user.chats.list.chat.chats)
   const mainRoom = useSelector((state) => state.user.room)
   const [localRoom, setLocalRoom] = useState()
+  const allRooms = useSelector((state) => state.user.allRooms)
 
   const dispatch = useDispatch()
 
@@ -19,25 +20,39 @@ const LeftConversations = () => {
         Authorization: `Bearer ${accessToken2}`
       }
     })
-    const body = await response.json()
-    setLocalRoom(body)
-    dispatch(setCurrentRoomAction(mainRoom))
+    if (response.ok) {
+      const body = await response.json()
+      console.log('body in left convo', body)
+      setLocalRoom(body)
+      dispatch(setCurrentRoomAction(mainRoom))
+    } else {
+      console.log('fetch broke')
+    }
   }
 
   useEffect(() => {
     if (localRoom) {
       fetchRooms(localRoom._id)
-      console.log('fetch working')
+      console.log('local room', localRoom)
+
+      console.log('component did update')
+    } else {
+      console.log('local room is null')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mainRoom])
+  }, [localRoom])
 
   useEffect(() => {
-    if (mainRoom) {
+    if (mainRoom._id) {
+      console.log('component did mount')
+      console.log('local room', localRoom)
+      console.log('mainroom', mainRoom)
       fetchRooms(mainRoom._id)
+    } else {
+      console.log('mainroom is undefined')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [mainRoom._id])
 
   // console.log('ALL CHATS left conversation', allChats)
 
