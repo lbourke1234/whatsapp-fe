@@ -22,6 +22,7 @@ const RightChatBox = () => {
   const roomMessages = allMessages.filter((message) => message.room === room);
   const userInfo = useSelector((state) => state.user.userInfo);
   const [message, setMessage] = useState("");
+
   const [fullMessage, setFullMessage] = useState({
     sender: "",
     room: "",
@@ -35,13 +36,11 @@ const RightChatBox = () => {
 
     socket.emit("message", userInfo._id, fullMessage.content, particularRoom);
 
-    roomMessages.push(userInfo._id, fullMessage.content, room);
-
-    clearData();
+    // roomMessages.push(userInfo._id, fullMessage.content, room);
   };
 
   useEffect(() => {
-    /*     refetchRoomMessages(); */
+    refetchRoomMessages();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roomMessages]);
 
